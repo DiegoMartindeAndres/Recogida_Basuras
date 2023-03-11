@@ -28,9 +28,9 @@ client.on('message', (topic, payload) => {
   var object = {
     'Nivel de Llenado Sensores' : data.bytes[0],
     'Flag Latitud' : data.bytes[2],
-    'Valores Latitud' : [data.bytes[3], data.bytes[4], data.bytes[5]],
-    'Flag Longitud' : data.bytes[6],
-    'Valores Longitud' : [data.bytes[7], data.bytes[8], data.bytes[9]],  
+    'Valores Latitud' : [data.bytes[3], data.bytes[4], data.bytes[5], data.bytes[6]],
+    'Flag Longitud' : data.bytes[7],
+    'Valores Longitud' : [data.bytes[8], data.bytes[9], data.bytes[10], data.bytes[11]],  
     'Bateria' : data.bytes[1],
   }
   console.log(object);
