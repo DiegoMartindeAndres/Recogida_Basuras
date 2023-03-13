@@ -32,6 +32,7 @@ client.on('message', (topic, payload) => {
     'Flag Longitud' : data.bytes[7],
     'Valores Longitud' : [data.bytes[8], data.bytes[9], data.bytes[10], data.bytes[11]],  
     'Bateria' : data.bytes[1],
+    'Fecha' : json.received_at
   }
   console.log(object);
   //Traza de prueba para comprobar que se asignan bien los datos
