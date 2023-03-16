@@ -7,6 +7,6 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - asiot:/home
+      - asiot:/data/db
 volumes:
   asiot:
