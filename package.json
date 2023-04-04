@@ -5,14 +5,22 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "seed": "node ./seeders/asiot_data.cjs",
+    "start": "node ./app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.3",
-    "mongoose": "^7.0.2",
-    "mqtt": "^4.3.7"
+    "pouchdb": "^8.0.1",
+    "mqtt": "^4.3.7",
+    "body-parser": "~1.12.4",
+    "ejs": "^3.0.1",
+    "express": "~4.13.1",
+    "method-override": "^2.3.1",
+    "mocha": "^7.0.1",
+    "nodemon": "^2.0.2",
+    "popper.js": "^1.16.1"
   }
 }

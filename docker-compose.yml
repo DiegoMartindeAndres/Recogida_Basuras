@@ -1,12 +1,14 @@
 version: '3.1'
 
 services:
-  mongo:
-    image: "mongo"
-    restart: always
+  couch:
+    image: couchdb    
     ports:
-      - "27017:27017"
+      - "5984:5984"
     volumes:
-      - asiot:/data/db
+      - asiot:/opt/couchdb/data
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=password
 volumes:
   asiot:
