@@ -1,6 +1,6 @@
 var PouchDB = require('pouchdb');
 
-var db = new PouchDB('http://localhost:5984/asiot_data');
+var db = new PouchDB('http://admin:password@localhost:5984/asiot_data');
 
 const data = [
     {
