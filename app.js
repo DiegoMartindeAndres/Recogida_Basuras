@@ -156,7 +156,7 @@ client.on('message', (topic, payload) => {
         mapMarkers.set(objectJs.id,marker);
     } else{
         var marker =  mapMarkers.get(objectJs.id);
-        //Llamar a la función pintarNuevo y recoger el objeto marker para luego meterlo en el mapa.
+        //Llamar a la función pintarExistente y recoger el objeto marker para luego meterlo en el mapa.
         //marker = ...;
         mapMarkers.set(objectJs.id,marker);
     }
