@@ -120,47 +120,6 @@ app.listen(portWeb, function() {
 //         'date' : json.received_at
 //       }
 
-
-
-
-//     var objectJs = JSON.parse(object);
-
-//     //Viejo objeto, si existe.
-//     var objetoViejoJs;
-//     try{
-//          var objetoViejo = db.get(name);
-//          objetoViejoJs = JSON.parse(objetoviejo);
-//     }catch(error){
-//         console.log(error);
-//         var objetoViejo = {
-//             'id' : -1
-//           }
-//         objetoViejoJs = JSON.parse(objetoViejo);
-//     }
-    
-//     try{
-//         if(objetoViejoJs.level = -1){
-//             //Si el objeto no existe
-//              db.put(object);
-            
-//         } else{
-//             //Si el objeto existe
-//              db.update(object)
-//         }
-//     } catch(error){
-//         console.log(error);
-//     }
-
-//     if(!mapMarkers.has(objetoViejoJs.id)){
-//         //Llamar a la función pintarNuevo y recoger el objeto marker para luego meterlo en el mapa.
-//         //var marker = ...;
-//         mapMarkers.set(objectJs.id,marker);
-//     } else{
-//         var marker =  mapMarkers.get(objectJs.id);
-//         //Llamar a la función pintarExistente y recoger el objeto marker para luego meterlo en el mapa.
-//         //marker = ...;
-//         mapMarkers.set(objectJs.id,marker);
-//     }
      
 // })
 

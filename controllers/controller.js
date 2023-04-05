@@ -1,4 +1,5 @@
-const PouchDB = require('pouchdb');
+//const PouchDB = require('pouchdb');
+import * as PouchDB from "pouchdb";
 
 const db = new PouchDB('asiot_data');
 const remoteCouch = 'http://localhost:5984/asiot_data';
@@ -8,6 +9,13 @@ exports.changeEvent = async function() {
         var doc = await db.allDocs({include_docs: true, descending: true});
         //console.log(doc);
         var todos = doc.rows.map(row => row.doc);
+        var todosJs = JSON.parse(todos); 
+
+        for (var x in todosJs){
+            if (todosJs.hasOwnProperty(x)){
+                inicializarFront(todosJs);
+            }
+        }
         console.log(todos)
         //redrawTodosUI(todos);
     } catch(err){
@@ -15,8 +23,12 @@ exports.changeEvent = async function() {
     }
 }
 
-exports.update = async function(obj) {
+exports.updateDB = async function(obj) {
     await db.update(obj)
+}
+
+exports.putDB = async function(obj) {
+    await db.put(obj)
 }
 
 exports.sync = function() {
