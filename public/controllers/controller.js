@@ -20,6 +20,7 @@ async function databaseChangeEvent(){
         var todos = doc.rows.map(row => row.doc);
         console.log("todos");
         var todosJs = JSON.parse(todos); 
+        
         //Borro los markers
         var markers = L.markerClusterGroup();
         markers.clearLayers();

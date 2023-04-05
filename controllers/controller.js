@@ -1,5 +1,5 @@
-//const PouchDB = require('pouchdb');
-import * as PouchDB from "pouchdb";
+const PouchDB = require('pouchdb');
+//import * as PouchDB from "pouchdb";
 
 const db = new PouchDB('asiot_data');
 const remoteCouch = 'http://localhost:5984/asiot_data';
