@@ -1,14 +1,15 @@
-import { db, remoteCouch} from "./controllers/controller.js";
-
 require('dotenv').config();
 const mqtt = require('mqtt')
 const express = require('express');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const path = require('path');
+const PouchDB = require('pouchdb');
 
-let objArray = [];
-let indiceObj = 0;
+//db
+const db = new PouchDB('asiot_data');
+const remoteCouch = 'http://localhost:5984/asiot_data';
+const mapMarkers = new Map();
 
 //Web
 const app = express();
@@ -53,16 +54,7 @@ app.use(function(err, req, res, next) {
 const portWeb = parseInt('8001', 10);
 app.listen(portWeb, function() {
     console.log('App listening on port: ' + 8001);
-});
-
-const map = L.map('map').setView([40.45272, -3.72649], 13);
-
-const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-	maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">Contenedores:</a>'
-}).addTo(map);
-
-      
+});   
 
 //Conexión MQTT
 const client = mqtt.connect(connectUrl, {
@@ -81,7 +73,24 @@ client.on('connect', () => {
         console.log(`Subscribe to topic '${topic}'`)
     })
     //En cuanto se conecta a la db, pinta todos los markers almacenados.
-    let todosDocs = await db.allDocs
+    let todosDocs = db.allDocs(function(err, docs) {
+        if (err) {
+           return console.log(err);
+        } else {
+           console.log (docs.rows);
+        }
+     });
+     var obj = JSON.parse(todosDocs);
+     //Para todos los elementos recuperados de la db, los pinta.
+     for (var x in obj){
+        if (obj.hasOwnProperty(x)){
+          // your code
+          var objectJs = JSON.parse(x);
+         //Llamar a la función pintarNuevo y recoger el objeto marker para luego meterlo en el mapa.
+         //var marker = ...;
+          mapMarkers.set(objectJs.id,marker);
+        }
+      }
     
 
 })
@@ -100,6 +109,7 @@ client.on('message', (topic, payload) => {
     //}
   
     //Nuevo objeto
+    //Falta terminar de recoger los valores. 
     var object = {
         'name' : name,
         'level' : data.bytes[0],
@@ -109,17 +119,20 @@ client.on('message', (topic, payload) => {
         'date' : json.received_at
       }
 
+
+
+
     var objectJs = JSON.parse(object);
 
     //Viejo objeto, si existe.
     var objetoViejoJs;
     try{
-         var objetoViejo = await db.get(name);
+         var objetoViejo = db.get(name);
          objetoViejoJs = JSON.parse(objetoviejo);
     }catch(error){
         console.log(error);
         var objetoViejo = {
-            'level' : -1
+            'id' : -1
           }
         objetoViejoJs = JSON.parse(objetoViejo);
     }
@@ -127,48 +140,37 @@ client.on('message', (topic, payload) => {
     try{
         if(objetoViejoJs.level = -1){
             //Si el objeto no existe
-            await db.put(object);
+             db.put(object);
             
         } else{
             //Si el objeto existe
-            await db.update(object)
+             db.update(object)
         }
     } catch(error){
         console.log(error);
     }
-    //Actualizo el mapa.   - MODIFICAR
 
-      //Gestiono las copias guardadas en la base de datos.
-      let encontrado = false;
-      let indice = 0;
-      //Extrago el valor del indice.
-      while (objetoViejoJs.level != -1 && !encontrado && indice < indiceObj){
-        if(objArray[indice].id == objetoJs.id){
-            encontrado = true;
-        } else{
-            indice ++;
-        }
-      }
-      //Si no existe, indice = -1. Si existe, el valor del índice es el índice donde se encuentra el marker en el array.
-      if(!encontrado){
-        //Ajusto las variables
-        indice = -1;
-        var marker = L.marker([objectJs.latitude, objectJs.longitude]).addTo(map);
-        marker.bindPopup("<b>Ubicación:" + objectJs.name + "</b><br>Nivel de llenado:"+objectJs.level"<br>Bateria:"+objectJs.battery).openPopup();
-        markerArray[indiceMarkerArray] = marker;
-        indiceMarkerArray++;
-       
-      } else{
-        //Si existe, entonces actualizo el mapa con el nuevo valor de llenado.
-        var marker = markerArray[indice]; //MAL
-        //Actualizo
-        marker.bindPopup("<b>Ubicación:" + objectJs.name + "</b><br>Nivel de llenado:"+objectJs.level"<br>Bateria:"+objectJs.battery).update();
-
-        //Reintroduzco en el array
-        markerArray[indice] = marker;
-      }
-
-
-
+    if(!mapMarkers.has(objetoViejoJs.id)){
+        //Llamar a la función pintarNuevo y recoger el objeto marker para luego meterlo en el mapa.
+        //var marker = ...;
+        mapMarkers.set(objectJs.id,marker);
+    } else{
+        var marker =  mapMarkers.get(objectJs.id);
+        //Llamar a la función pintarNuevo y recoger el objeto marker para luego meterlo en el mapa.
+        //marker = ...;
+        mapMarkers.set(objectJs.id,marker);
+    }
      
 })
+
+exports.sync = function() {
+    var opts = {live: true};
+    db.replicate.to(remoteCouch, opts, syncError);
+    db.replicate.from(remoteCouch, opts, syncError);
+}
+
+exports.syncError = function() {
+    console.log("There was a problem syncing");
+}
+
+module.exports = { db, remoteCouch }

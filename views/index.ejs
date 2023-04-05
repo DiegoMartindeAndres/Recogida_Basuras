@@ -43,18 +43,25 @@
     crossorigin=""></script>
 
     <script>
-      //Particularizar el mapa
-    	const map = L.map('map').setView([40.45272, -3.72649], 13);
+      //Este script maneja el mapa y solo el mapa. Y tiene que estar dentro de un html porque si no no reconoce window.
+      const map = L.map('map').setView([40.45272, -3.72649], 13);
 
-    	const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    		maxZoom: 19,
-    		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">Contenedores:</a>'
-    	}).addTo(map);
+      const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">Contenedores:</a>'
+      }).addTo(map);
+      
+      function pintarNuevo (objetoJs){
+        var marker = L.marker([objectJs.latitude, objectJs.longitude]).addTo(map);
+        marker.bindPopup("<b>Ubicación:" + objectJs.name + " | "+ objectJs.battery +"%"+ "</b><br>Nivel de llenado:"+objectJs.level).openPopup();
+        return marker;
+      }
 
-      //Se reciben los objetos del req y se pintan en el mapa.
-      //Para cada elemento se necesita un marker y un popup.
-      var marker = L.marker([40.45272, -3.72649]).addTo(map);
-      marker.bindPopup("<b>Ubicación: ETSIT</b><br>Nivel de llenado: 800%").openPopup();
-
+      function pintarExistente(objetoJs){
+        var marker =  mapMarkers.get(objectJs.id);
+        marker.bindPopup("<b>Ubicación:" + objectJs.name + " | "+ objectJs.battery +"%"+ "</b><br>Nivel de llenado:"+objectJs.level).update();
+        return marker;
+      }
+    
     </script>
 </html>
