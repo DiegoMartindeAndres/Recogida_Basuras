@@ -1,10 +1,15 @@
-const Controller = require('../controllers/controller')
-const { db, remoteCouch } = require('../controllers/controller')
+const Controller = require('../../controllers/controller')
+const { db, remoteCouch } = require('../../controllers/controller')
 
 db.changes({
     since: 'now',
     live: true
-}).on('change', Controller.changeEvent);
+}).on('change', updateFront);
+
+function updateFront() {
+    //L
+    Controller.changeEvent
+}
 
 //Manejadores de eventos
 function addEventListeners() {

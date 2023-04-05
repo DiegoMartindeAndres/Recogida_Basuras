@@ -15,6 +15,10 @@ exports.changeEvent = async function() {
     }
 }
 
+exports.update = async function(obj) {
+    await db.update(obj)
+}
+
 exports.sync = function() {
     var opts = {live: true};
     db.replicate.to(remoteCouch, opts, syncError);
