@@ -2,6 +2,7 @@
 const db = new PouchDB('asiot_data');
 const remoteCouch = 'http://localhost:5984/asiot_data';
 const map = L.map('map').setView([40.45272, -3.72649], 13);
+var markersLayer = new L.LayerGroup();
 
 const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -18,19 +19,21 @@ async function databaseChangeEvent(){
     try{
         var doc = await db.allDocs({include_docs: true, descending: true});
         var todos = doc.rows.map(row => row.doc);
-        console.log("todos");
-        var todosJs = JSON.parse(todos); 
-        
+        console.log(todos)
+       
         //Borro los markers
-        var markers = L.markerClusterGroup();
-        markers.clearLayers();
+        markersLayer.clearLayers();
 
-        for (var x in todosJs){
-            console.log("Marker: "+x);
-            if (todosJs.hasOwnProperty(x)){
-                pintarMarker(x);
+        for (var x in todos){
+            var markerJs = JSON.parse(x.value); 
+            console.log("Marker: "+markerJs);
+            if (todosJs.hasOwnProperty(markerJs)){
+                console.log(markerJs)
+                pintarMarker(markerJs);
+               
             }
         }
+        markersLayer.addTo(map);
         console.log(todos)
     } catch(err){
         console.log(err)
@@ -41,8 +44,10 @@ async function databaseChangeEvent(){
 
 function pintarMarker(object){
     var objectJs = JSON.parse(object);
-    var marker = L.marker([objectJs.latitude, objectJs.longitude]).addTo(map);
+    console.log("longitud:"+objectJs.longitude)
+    var marker = L.marker([objectJs.latitude, objectJs.longitude]).bindPopup(popup, {showOnMouseOver:true});
     marker.bindPopup("<b>Ubicación:" + objectJs.name + " | "+ objectJs.battery +"%"+ "</b><br>Nivel de llenado:"+objectJs.level).openPopup();
+    markersLayer.addLayer(marker);
 }
 
 //Manejadores de eventos
@@ -60,7 +65,7 @@ function addEventListeners() {
 
 document.addEventListener('DOMContentLoaded', (event) => {
     addEventListeners();
-    //changeEvent();
+    databaseChangeEvent();
 
     if (remoteCouch){
         sync();
