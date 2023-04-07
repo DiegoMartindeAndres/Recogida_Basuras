@@ -18,23 +18,23 @@ async function databaseChangeEvent(){
     //Este método es llamado cada vez que hay un cambio en la base de datos por el db.changes.
     try{
         var doc = await db.allDocs({include_docs: true, descending: true});
+      
         var todos = doc.rows.map(row => row.doc);
-        console.log(todos)
+        
        
         //Borro los markers
         markersLayer.clearLayers();
 
-        for (var x in todos){
-            var markerJs = JSON.parse(x.value); 
-            console.log("Marker: "+markerJs);
-            if (todosJs.hasOwnProperty(markerJs)){
-                console.log(markerJs)
-                pintarMarker(markerJs);
-               
-            }
-        }
+        todos.forEach((element, i) => {
+            console.log(JSON.stringify(element))
+            var objectJs = JSON.parse(JSON.stringify(element));
+            console.log(objectJs)
+            pintarMarker(objectJs);
+        });
+
+        
         markersLayer.addTo(map);
-        console.log(todos)
+        
     } catch(err){
         console.log(err)
     }
@@ -42,11 +42,11 @@ async function databaseChangeEvent(){
 
 
 
-function pintarMarker(object){
-    var objectJs = JSON.parse(object);
-    console.log("longitud:"+objectJs.longitude)
-    var marker = L.marker([objectJs.latitude, objectJs.longitude]).bindPopup(popup, {showOnMouseOver:true});
-    marker.bindPopup("<b>Ubicación:" + objectJs.name + " | "+ objectJs.battery +"%"+ "</b><br>Nivel de llenado:"+objectJs.level).openPopup();
+function pintarMarker(objectJs){
+    console.log(objectJs)
+    //var marker = L.marker([objectJs.latitude, objectJs.longitude]).bindPopup(popup, {showOnMouseOver:true});
+    var marker = L.marker([objectJs.latitude, objectJs.longitude]);
+    marker.bindPopup("<b>Ubicación:" + objectJs._id + " | "+ objectJs.battery +"%"+ "</b><br>Nivel de llenado:"+objectJs.level).openPopup();
     markersLayer.addLayer(marker);
 }
 
