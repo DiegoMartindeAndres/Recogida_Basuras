@@ -9,6 +9,28 @@ const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">Contenedores:</a>'
 }).addTo(map);
 
+var iconoVerde = L.icon({
+    iconUrl: 'images/verde.png',
+    iconSize:     [38, 95], // size of the icon
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
+var iconoAmarillo = L.icon({
+    iconUrl: 'images/amarillo.png',
+    iconSize:     [38, 95], // size of the icon
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
+var iconoRojo = L.icon({
+    iconUrl: 'images/rojo.png',
+    iconSize:     [38, 95], // size of the icon
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+
+
 db.changes({
     since: 'now',
     live: true}).on('change',databaseChangeEvent);
@@ -45,7 +67,7 @@ async function databaseChangeEvent(){
 function pintarMarker(objectJs){
     console.log(objectJs)
     //var marker = L.marker([objectJs.latitude, objectJs.longitude]).bindPopup(popup, {showOnMouseOver:true});
-    var marker = L.marker([objectJs.latitude, objectJs.longitude]);
+    var marker = L.marker([objectJs.latitude, objectJs.longitude],{icon: iconoVerde});
     marker.bindPopup("<b>Ubicación:" + objectJs._id + " | "+ objectJs.battery +"%"+ "</b><br>Nivel de llenado:"+objectJs.level).openPopup();
     markersLayer.addLayer(marker);
 }
