@@ -5,7 +5,7 @@ var db = new PouchDB('http://admin:password@localhost:5984/asiot_data');
 const data = [
     {
         _id: 'ETSIT',
-        level: 254,
+        level: 15,
         latitude: 40.4523805,
         longitude: -3.7262121,
         battery: 254
@@ -19,7 +19,7 @@ const data = [
     },
     {
         _id: 'UC3M',
-        level: 254,
+        level: 0,
         latitude: 40.3355117,
         longitude: -3.7644233,
         battery: 254

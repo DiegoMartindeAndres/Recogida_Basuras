@@ -4,8 +4,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const path = require('path');
-const Controller = require('./controllers/controller')
-
 
 //db
 // const db = new PouchDB('asiot_data');
