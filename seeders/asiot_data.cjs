@@ -5,24 +5,24 @@ var db = new PouchDB('http://admin:password@localhost:5984/asiot_data');
 const data = [
     {
         _id: 'ETSIT',
-        level: 15,
+        level: 15, //Mitad
         latitude: 40.4523805,
         longitude: -3.7262121,
-        battery: 254
+        battery: 254 //100%
     },
     {
         _id: 'Campus Sur',
-        level: 254,
+        level: 254, //Lleno
         latitude: 40.388895,
         longitude: -3.628677,
-        battery: 254
+        battery: 127 //50%
     },
     {
         _id: 'UC3M',
-        level: 0,
+        level: 0, //Vacio
         latitude: 40.3355117,
         longitude: -3.7644233,
-        battery: 254
+        battery: 228.6 //90%
     },
 ];
 

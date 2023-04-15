@@ -17,7 +17,7 @@
         crossorigin=""/>
     </head>
     <body>
-        <article class="container-fluid">
+        <section class="container-fluid">
             <div class="row">
               <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-primary">
                 <div id="items" class="col-xl-10 col-lg-9 col-md-9">
@@ -33,7 +33,12 @@
             </div>
             <div id="title"><h3><b>Control de llenado de contenedores:</b></h3></div>
             <div id="map"></div>
-        </article>
+            <div class="container text-center mt-3">
+                <div id="modal" class="row">
+                </div>
+            </div>
+        </section>
+        <script type="module" src="/views/index.js"></script>
     </body>
     <script src="//cdn.jsdelivr.net/npm/pouchdb@7.3.1/dist/pouchdb.min.js"></script>
     <!-- Make sure you put this AFTER Leaflet's CSS -->
@@ -41,6 +46,4 @@
     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
     crossorigin=""></script>
     <!--<script type="module" src="/javascripts/index.js"></script>-->
-    <script type="module" src="/views/index.js"></script>
-
 </html>

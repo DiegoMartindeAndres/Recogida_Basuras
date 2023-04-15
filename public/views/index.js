@@ -45,6 +45,7 @@ async function redrawEvent() {
         console.log(objectJs)
         var markerValues = configurarMarkerValues(objectJs)
         pintarMarker(markerValues);
+        pintarModal(markerValues, i);
     });
 
     markersLayer.addTo(map);
@@ -95,6 +96,31 @@ function pintarMarker(markerValues){
     var marker = L.marker([markerValues.latitude, markerValues.longitude],{icon: markerValues.icon});
     marker.bindPopup("<b>Ubicación:" + markerValues.id + " | "+ markerValues.battery +"%"+ "</b><br>" + markerValues.level).openPopup();
     markersLayer.addLayer(marker);
+}
+
+function pintarModal(markerValues, i){
+    const modal = document.getElementById("modal");
+    const old_element = document.getElementById("element_" + i);
+
+    if (old_element != null) {
+        old_element.remove();
+    }
+
+    var element = document.createElement('div');
+    element.setAttribute('id', 'element_' + i);
+    element.classList.add("col-4", "border" , "border-primary");
+    element.innerHTML =
+        '<div class="row">' +
+            '<div class="col" style="font-weight: bold">' + markerValues.id + '</div>' +
+            '<div class="w-100 mb-1"></div>' +
+            '<div class="col mb-1">' + markerValues.level + '</div>' +
+            '<div class="col mb-1">' + 'Batería: ' + markerValues.battery + '%</div>' +
+            '<div class="w-100"></div>' +
+            '<div class="col">' + 'Longitud: ' + markerValues.longitude + '</div>' +
+            '<div class="col">' + 'Latitud: ' + markerValues.latitude + '</div>' +
+        '</div>';
+
+    modal.appendChild(element);
 }
 
 //Manejadores de eventos
