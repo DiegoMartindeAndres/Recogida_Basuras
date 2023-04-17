@@ -28,6 +28,9 @@ const iconoRojo = L.icon({
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 
+const cookieNotice = document.getElementById('cookie-notice');
+const cookieAccept = document.getElementById('cookie-accept');
+
 db.changes({
     since: 'now',
     live: true
@@ -110,16 +113,17 @@ function pintarModal(markerValues, i){
     element.setAttribute('id', 'element_' + i);
     element.classList.add("col-4", "border" , "border-primary");
     element.innerHTML =
-        '<div class="row">' +
+        '<div id="table" class="table">' +
             '<div class="col" style="font-weight: bold">' + markerValues.id + '</div>' +
+            '<hr>'+
             '<div class="w-100 mb-1"></div>' +
             '<div class="col mb-1">' + markerValues.level + '</div>' +
             '<div class="col mb-1">' + 'Batería: ' + markerValues.battery + '%</div>' +
             '<div class="w-100"></div>' +
             '<div class="col">' + 'Longitud: ' + markerValues.longitude + '</div>' +
             '<div class="col">' + 'Latitud: ' + markerValues.latitude + '</div>' +
-        '</div>';
-
+        '</div>'+
+          
     modal.appendChild(element);
 }
 
@@ -153,3 +157,14 @@ function sync () {
 function syncError(){
     console.log("There was an error syncing")
 }
+
+function hideCookieNotice() {
+    cookieNotice.style.display = 'none';
+    localStorage.setItem('cookiesAccepted', 'true');
+  }
+  
+  if (localStorage.getItem('cookiesAccepted')) {
+    cookieNotice.style.display = 'none';
+  } else {
+    cookieAccept.addEventListener('click', hideCookieNotice);
+  }
