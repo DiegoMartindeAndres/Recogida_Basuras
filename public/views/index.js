@@ -122,7 +122,7 @@ function pintarModal(markerValues, i){
             '<div class="w-100"></div>' +
             '<div class="col">' + 'Longitud: ' + markerValues.longitude + '</div>' +
             '<div class="col">' + 'Latitud: ' + markerValues.latitude + '</div>' +
-        '</div>'+
+        '</div>';
           
     modal.appendChild(element);
 }
