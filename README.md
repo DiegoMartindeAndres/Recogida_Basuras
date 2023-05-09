@@ -6,7 +6,8 @@ Para lanzar la base de datos ejecutar `docker-compose up -d`
 
 Para lanzar las seeds: `npm run seed`
 
-Para lanzar la aplicación: `npm start` 
+Para lanzar la aplicación: `npm start`
+
 Desarrollo del proyecto:
 Una de las amenazas de este siglo es el calentamiento global. Necesitamos reducir la emisión de residuos y hacer campañas de concienciación para reciclar y así conseguir evitar que se produzcan efectos dañinos e irreversibles para el planeta.
 Existen zonas donde hay que pasar a recoger la basura cada dos días, y otras donde se requieren que se pase a recoger dos veces al día. Esto significa no solo un desperdicio de recursos, si no que además no se trazan rutas óptimas de recogida.
