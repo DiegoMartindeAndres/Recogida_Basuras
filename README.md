@@ -6,5 +6,5 @@ Para lanzar la base de datos ejecutar `docker-compose up -d`
 
 Para lanzar las seeds: `npm run seed`
 
-Para lanzar la aplicación: ``npm start` 
+Para lanzar la aplicación: `npm start` 
   
