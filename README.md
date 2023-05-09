@@ -8,7 +8,7 @@ Para lanzar las seeds: `npm run seed`
 
 Para lanzar la aplicación: `npm start`
 
-*Desarrollo del proyecto:
+**Desarrollo del proyecto**:
 Una de las amenazas de este siglo es el calentamiento global. Necesitamos reducir la emisión de residuos y hacer campañas de concienciación para reciclar y así conseguir evitar que se produzcan efectos dañinos e irreversibles para el planeta.
 Existen zonas donde hay que pasar a recoger la basura cada dos días, y otras donde se requieren que se pase a recoger dos veces al día. Esto significa no solo un desperdicio de recursos, si no que además no se trazan rutas óptimas de recogida.
 Nuestro objetivo va a ser el diseño de un sistema de monitorización de cubos de basura utilizando la red LoRaWAN para optimizar las recogidas de estas. Para ello introduciremos sensores de luz que indican hasta dónde se ha llenado el cubo basura, información que llevaremos a un microprocesador que la procesa y la envía a una pasarela a través de LoRa y a partir de ahí, se envía a un servidor a través de internet. El servidor contiene una pequeña aplicación diseñada en JavaScript con ayuda de node, la cual se conecta a TheThingsNetwork por medio de MQTT. De esta manera, MQTT es capaz de enviar y recibir mensajes de una nube de dispositivos IoT. Además, también es super eficiente, ya que sus mensajes pueden ocupar un mínimo de 2 bytes. Además, es muy escalable, muy seguro y muy versátil, ya que se puede emplear con lenguajes como Python.
