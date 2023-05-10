@@ -1,4 +1,4 @@
-# ASIOT
+# Recogida de basuras
 
 Aplicación para monitorizar información acerca del almacenamiento de cubos de basura a tiempo real a través de MQTT. 
 
